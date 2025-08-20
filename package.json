@@ -1,6 +1,8 @@
 {
   "name": "altbin.dev",
+  "description": "Easily share text and code snippets with AltBin. A sleek and secure pastebin for developers.",
   "version": "1.0.0",
+  "author": "UltraLion <ultralionfr@gmail.com> (https://ultralion.xyz)",
   "private": true,
   "packageManager": "pnpm@10.8.1",
   "scripts": {

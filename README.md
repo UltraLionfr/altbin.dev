@@ -114,4 +114,4 @@ You are free to use, modify, and distribute it as you wish.
 
 Built with ❤️ by **[UltraLion](https://github.com/UltraLionfr)**
 
-```
+---

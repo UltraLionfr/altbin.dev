@@ -4,11 +4,6 @@ import { useRouter } from 'next/navigation';
 import Prism from 'prismjs';
 import { use, useEffect, useState } from 'react';
 
-import 'prismjs/components/prism-bash';
-import 'prismjs/components/prism-javascript';
-import 'prismjs/components/prism-json';
-import 'prismjs/components/prism-python';
-import 'prismjs/components/prism-typescript';
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 import 'prismjs/plugins/line-numbers/prism-line-numbers.js';
 import 'prismjs/themes/prism-tomorrow.css';
@@ -18,6 +13,15 @@ import CodeViewer from '@/components/paste/CodeViewer';
 import LoadingPaste from '@/components/paste/LoadingPaste';
 import PasswordForm from '@/components/paste/PasswordForm';
 import PasteSidebar from '@/components/paste/PasteSidebar';
+
+
+async function loadLanguage(lang: string) {
+  try {
+    await import(`prismjs/components/prism-${lang}.js`);
+  } catch (err) {
+    console.warn(`[Prism] Language '${lang}' introuvable. Fallback -> plaintext`);
+  }
+}
 
 export default function PastePage({
   params,
@@ -54,29 +58,38 @@ export default function PastePage({
     const data = await res.json();
     setPaste(data);
 
-    if (data.content.includes('function') || data.content.includes('const')) {
-      setLanguage('language-javascript');
-    } else if (data.content.includes('import') || data.content.includes('export')) {
-      setLanguage('language-typescript');
-    } else if (data.content.includes('{') && data.content.includes('}')) {
-      setLanguage('language-json');
+    const content = data.content.toLowerCase();
+
+    let detected = 'javascript';
+    if (content.includes('select ') || content.includes('insert into')) {
+      detected = 'sql';
+    } else if (content.includes('function') || content.includes('const')) {
+      detected = 'javascript';
+    } else if (content.includes('import ') || content.includes('export ')) {
+      detected = 'typescript';
+    } else if (content.includes('{') && content.includes('}')) {
+      detected = 'json';
+    } else if (content.includes('#include') || content.includes('int main')) {
+      detected = 'cpp';
+    } else if (content.includes('arduino')) {
+      detected = 'arduino';
     } else {
-      setLanguage('language-bash');
+      detected = 'bash';
     }
+
+    await loadLanguage(detected);
+    setLanguage(`language-${detected}`);
 
     setLoading(false);
   };
 
   useEffect(() => {
     fetchPaste();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   useEffect(() => {
-    if (paste?.content) {
-      Prism.highlightAll();
-    }
-  }, [paste]);
+    if (paste?.content) Prism.highlightAll();
+  }, [paste, language]);
 
   if (loading) return <LoadingPaste />;
 
@@ -91,5 +104,4 @@ export default function PastePage({
       <AuthSection />
     </div>
   );
-
 }

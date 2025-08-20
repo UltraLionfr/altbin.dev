@@ -4,7 +4,13 @@ import { Player } from "@lordicon/react";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { forwardRef, useEffect, useRef, useState } from "react";
+import {
+  ForwardedRef,
+  forwardRef,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 // URLs d’icônes Lordicon
 const icons = {
@@ -17,13 +23,20 @@ const icons = {
 
 // Wrapper pour Lordicon
 const LordIcon = forwardRef(function LordIcon(
-  { url, size = 30, colorize = "#3b82f6" }: { url: string; size?: number; colorize?: string },
-  ref: any
+  {
+    url,
+    size = 30,
+    colorize = "#3b82f6",
+  }: { url: string; size?: number; colorize?: string },
+  ref: ForwardedRef<Player>
 ) {
-  const [iconData, setIconData] = useState<any>(null);
+  const [iconData, setIconData] = useState<Record<string, unknown> | null>(null);
 
   useEffect(() => {
-    fetch(url).then((res) => res.json()).then(setIconData);
+    fetch(url)
+      .then((res) => res.json())
+      .then(setIconData)
+      .catch(() => setIconData(null));
   }, [url]);
 
   if (!iconData) return null;
@@ -40,7 +53,7 @@ function FeatureCard({
   desc: string;
   icon: string;
 }) {
-  const iconRef = useRef<any>(null);
+  const iconRef = useRef<Player>(null);
 
   return (
     <motion.div
@@ -76,7 +89,7 @@ function ContactButton({
   shadow: string;
   color?: string;
 }) {
-  const iconRef = useRef<any>(null);
+  const iconRef = useRef<Player>(null);
 
   return (
     <motion.a

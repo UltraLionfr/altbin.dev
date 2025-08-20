@@ -1,24 +1,23 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import Prism from 'prismjs';
-import { use, useEffect, useState } from 'react';
+import { use, useCallback, useEffect, useState } from 'react';
 
 import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 import 'prismjs/plugins/line-numbers/prism-line-numbers.js';
 import 'prismjs/themes/prism-tomorrow.css';
 
-import AuthSection from "@/components/paste-form/AuthSection";
+import AuthSection from '@/components/paste-form/AuthSection';
 import CodeViewer from '@/components/paste/CodeViewer';
 import LoadingPaste from '@/components/paste/LoadingPaste';
 import PasswordForm from '@/components/paste/PasswordForm';
 import PasteSidebar from '@/components/paste/PasteSidebar';
-
+import { Paste } from '@/types/paste';
 
 async function loadLanguage(lang: string) {
   try {
     await import(`prismjs/components/prism-${lang}.js`);
-  } catch (err) {
+  } catch {
     console.warn(`[Prism] Language '${lang}' introuvable. Fallback -> plaintext`);
   }
 }
@@ -29,14 +28,13 @@ export default function PastePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = use(params);
-  const router = useRouter();
 
-  const [paste, setPaste] = useState<any | null>(null);
+  const [paste, setPaste] = useState<Paste | null>(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const [language, setLanguage] = useState<string>('language-javascript');
 
-  const fetchPaste = async (pwd?: string) => {
+  const fetchPaste = useCallback(async (pwd?: string) => {
     setLoading(true);
     const res = await fetch(`/api/paste/${id}`, {
       method: 'POST',
@@ -55,7 +53,7 @@ export default function PastePage({
       return;
     }
 
-    const data = await res.json();
+    const data: Paste = await res.json();
     setPaste(data);
 
     const content = data.content.toLowerCase();
@@ -81,11 +79,11 @@ export default function PastePage({
     setLanguage(`language-${detected}`);
 
     setLoading(false);
-  };
+  }, [id]);
 
   useEffect(() => {
     fetchPaste();
-  }, [id]);
+  }, [fetchPaste]);
 
   useEffect(() => {
     if (paste?.content) Prism.highlightAll();
@@ -99,8 +97,8 @@ export default function PastePage({
 
   return (
     <div className="relative w-screen h-screen bg-[#0e0f13] text-white flex overflow-hidden">
-      <CodeViewer paste={paste} language={language} />
-      <PasteSidebar paste={paste} id={id} />
+      <CodeViewer paste={paste!} language={language} />
+      <PasteSidebar paste={paste!} id={id} />
       <AuthSection />
     </div>
   );

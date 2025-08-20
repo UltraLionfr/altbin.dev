@@ -1,12 +1,13 @@
 "use client";
 
+import type { Player } from "@lordicon/react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
 import LordIcon from "./LordIcon";
 
 export default function Header({ user }: { user?: string | null }) {
-  const plusIconRef = useRef<any>(null);
+  const plusIconRef = useRef<Player | null>(null);
   const router = useRouter();
 
   return (

@@ -1,5 +1,6 @@
 "use client";
 
+import type { Player } from "@lordicon/react";
 import { motion } from "framer-motion";
 import { useRef } from "react";
 import LordIcon from "./LordIcon";
@@ -10,10 +11,10 @@ export default function StatCard({
   icon,
 }: {
   label: string;
-  value: any;
+  value: string | number | null;
   icon: string;
 }) {
-  const iconRef = useRef<any>(null);
+  const iconRef = useRef<Player | null>(null);
 
   return (
     <motion.div
@@ -28,7 +29,7 @@ export default function StatCard({
         </div>
         <div>
           <div className="text-sm text-neutral-400">{label}</div>
-          <div className="text-xl font-bold text-white">{value}</div>
+          <div className="text-xl font-bold text-white">{value ?? "—"}</div>
         </div>
       </div>
     </motion.div>

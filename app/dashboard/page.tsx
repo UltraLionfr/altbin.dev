@@ -30,13 +30,34 @@ const dashboardIcons = {
   paste: "https://cdn.lordicon.com/hmpomorl.json",
 };
 
+// ---- Types ----
+interface DashboardStats {
+  totalPastes: number;
+  totalViews: number;
+  recentPastes: number;
+  apiUsage: number;
+  storageUsed: number;
+  avgViews: number;
+  mostViewed: number;
+  avgSize: number;
+}
+
+interface Paste {
+  id: string;
+  title: string;
+  content: string;
+  createdAt: string;
+  views: number;
+  maxViews: number | null;
+}
+
 export default function DashboardPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [stats, setStats] = useState<any>(null);
-  const [pastes, setPastes] = useState<any[]>([]);
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [pastes, setPastes] = useState<Paste[]>([]);
   const [page, setPage] = useState(1);
   const [totalPastes, setTotalPastes] = useState(0);
   const [deleteId, setDeleteId] = useState<string | null>(null);
@@ -60,16 +81,22 @@ export default function DashboardPage() {
     if (status === "authenticated") {
       const fetchStats = async () => {
         const res = await fetch("/api/stats");
-        if (res.ok) setStats(await res.json());
+        if (res.ok) {
+          const data: DashboardStats = await res.json();
+          setStats(data);
+        }
       };
 
       const fetchPastes = async () => {
         const res = await fetch(
           `/api/user-pastes?page=${page}&perPage=${PER_PAGE}&q=${encodeURIComponent(searchTerm)}`
         );
-        if (!res.ok) return setPastes([]);
+        if (!res.ok) {
+          setPastes([]);
+          return;
+        }
         try {
-          const data = await res.json();
+          const data: { pastes: Paste[]; total: number } = await res.json();
           setPastes(data.pastes ?? []);
           setTotalPastes(data.total ?? 0);
         } catch {
@@ -92,7 +119,7 @@ export default function DashboardPage() {
       <Sidebar />
 
       <main className="flex-1 p-8 overflow-y-auto">
-        <Header user={session?.user?.name} />
+        <Header user={session?.user?.name ?? "User"} />
 
         {/* Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
@@ -110,7 +137,13 @@ export default function DashboardPage() {
           ))}
         </div>
 
-        <SearchBar value={searchTerm} onChange={(v) => { setSearchTerm(v); setPage(1); }} />
+        <SearchBar
+          value={searchTerm}
+          onChange={(v) => {
+            setSearchTerm(v);
+            setPage(1);
+          }}
+        />
 
         {/* Pastes */}
         <h2 className="text-lg font-semibold text-white mb-4">Your Pastes</h2>
@@ -134,7 +167,12 @@ export default function DashboardPage() {
         <ConfirmDeleteModal
           open={!!deleteId}
           onOpenChange={(open) => !open && setDeleteId(null)}
-          onConfirm={() => { if (deleteId) { handleDelete(deleteId); setDeleteId(null); } }}
+          onConfirm={() => {
+            if (deleteId) {
+              handleDelete(deleteId);
+              setDeleteId(null);
+            }
+          }}
         />
       </main>
     </div>

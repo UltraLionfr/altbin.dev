@@ -8,9 +8,12 @@ export default function PasswordForm({
   return (
     <div className="h-screen w-screen bg-[#0e0f13] flex items-center justify-center text-white">
       <form
-        onSubmit={(e) => {
+        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
           e.preventDefault();
-          const pwd = (e.currentTarget as any).password.value;
+          const form = e.currentTarget as HTMLFormElement & {
+            password: { value: string };
+          };
+          const pwd = form.password.value;
           onSubmit(pwd);
         }}
         className="w-full max-w-sm rounded-2xl p-6 space-y-4 backdrop-blur-xl shadow-2xl bg-[linear-gradient(to_bottom_right,rgba(20,24,38,0.9),rgba(14,16,24,0.9))] ring-1 ring-white/10"

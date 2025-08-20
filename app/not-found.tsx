@@ -30,7 +30,7 @@ export default function NotFoundPage() {
         </h2>
 
         <p className="text-base text-neutral-400 mb-10 leading-relaxed">
-          The paste you're looking for might have been deleted, expired, or the
+          The paste you&apos;re looking for might have been deleted, expired, or the
           URL is incorrect.
         </p>
 

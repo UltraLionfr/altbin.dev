@@ -11,11 +11,13 @@ import 'prismjs/plugins/line-numbers/prism-line-numbers.js';
 import 'prismjs/themes/prism-tomorrow.css';
 import { useEffect, useRef } from 'react';
 
+import { Paste } from '@/types/paste';
+
 export default function CodeViewer({
   paste,
   language,
 }: {
-  paste: any;
+  paste: Paste;
   language: string;
 }) {
   const codeRef = useRef<HTMLPreElement | null>(null);
@@ -28,7 +30,10 @@ export default function CodeViewer({
 
   return (
     <div className="flex-1 h-full font-mono text-sm">
-      <pre ref={codeRef} className="h-full overflow-auto pt-6 pb-6 px-6 line-numbers">
+      <pre
+        ref={codeRef}
+        className="h-full overflow-auto pt-6 pb-6 px-6 line-numbers"
+      >
         <code className={`${language} whitespace-pre-wrap break-words`}>
           {paste.content}
         </code>

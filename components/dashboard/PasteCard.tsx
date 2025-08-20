@@ -1,19 +1,28 @@
 "use client";
 
+import type { Player } from "@lordicon/react";
 import { motion } from "framer-motion";
 import { useRef } from "react";
 import LordIcon from "./LordIcon";
+
+interface Paste {
+  id: string;
+  title: string | null;
+  content: string | null;
+  createdAt: string | Date;
+  views: number;
+}
 
 export default function PasteCard({
   paste,
   onDelete,
   pasteIconUrl,
 }: {
-  paste: any;
+  paste: Paste;
   onDelete: (id: string) => void;
   pasteIconUrl: string;
 }) {
-  const pasteIconRef = useRef<any>(null);
+  const pasteIconRef = useRef<Player | null>(null);
 
   return (
     <motion.div
@@ -27,11 +36,11 @@ export default function PasteCard({
           <LordIcon ref={pasteIconRef} url={pasteIconUrl} size={28} colorize="#3b82f6" />
         </div>
         <div className="font-mono text-white text-sm truncate">
-          {paste.title || 'Untitled'}
+          {paste.title || "Untitled"}
         </div>
       </div>
       <div className="text-xs text-neutral-400 font-mono mb-3 line-clamp-3">
-        {paste.content || 'No content'}
+        {paste.content || "No content"}
       </div>
       <div className="flex justify-between items-center mt-auto text-xs text-neutral-500">
         <span>{new Date(paste.createdAt).toLocaleString()}</span>

@@ -2,6 +2,7 @@
 
 import { Info, Shield } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 
 export default function AuthSection() {
   const { data: session, status } = useSession();
@@ -13,13 +14,13 @@ export default function AuthSection() {
       {!session?.user ? (
         <div className="flex items-center gap-3">
           {/* Bouton About */}
-          <a
+          <Link
             href="/about"
             className="cursor-pointer flex items-center gap-2 bg-[#0d1117] hover:bg-[#1c2230] border border-white/10 text-neutral-300 px-4 py-2 rounded-lg shadow-md transition-all"
           >
             <Info size={16} />
             <span>About</span>
-          </a>
+          </Link>
 
           {/* Bouton Login */}
           <button
@@ -41,12 +42,12 @@ export default function AuthSection() {
           </div>
 
           <div className="flex justify-between gap-2 mt-2">
-            <a
+            <Link
               href="/dashboard"
               className="flex-1 text-center bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg transition-colors"
             >
               Dashboard
-            </a>
+            </Link>
             <button
               onClick={() => signOut()}
               className="cursor-pointer flex-1 text-center bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg transition-colors"

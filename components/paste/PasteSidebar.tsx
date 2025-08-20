@@ -1,10 +1,11 @@
 'use client';
 
+import type { Paste } from "@/types/paste";
 import { CalendarDays, Copy, Download, Eye, FileText, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function PasteSidebar({ paste, id }: { paste: any; id: string }) {
+export default function PasteSidebar({ paste, id }: { paste: Paste; id: string }) {
   const [copied, setCopied] = useState(false);
   const router = useRouter();
 

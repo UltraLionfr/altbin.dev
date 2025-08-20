@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./altbin.db"
+}
+
+model Paste {
+  id        String   @id @default(cuid())
+  title     String?
+  content   String
+  password  String?
+  maxViews  Int?
+  views     Int      @default(0)
+  size      Int?
+  createdAt DateTime @default(now())
+  createdBy String?
+
+  dummyId String?
+  dummy   Dummy?    @relation(fields: [dummyId], references: [id])
+}
+
+model Dummy {
+  id     String  @id @default(cuid())
+  pastes Paste[]
+}

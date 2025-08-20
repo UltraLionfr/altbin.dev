@@ -14,11 +14,11 @@ import {
 
 // URLs d’icônes Lordicon
 const icons = {
-  simplicity: "https://cdn.lordicon.com/tsrgicte.json", // simplicité
-  shield: "https://cdn.lordicon.com/sjoccsdj.json",     // sécurité
-  community: "https://cdn.lordicon.com/ubpgwkmy.json",  // communauté / open source
-  github: "https://cdn.lordicon.com/jjxzcivr.json",     // GitHub
-  discord: "https://cdn.lordicon.com/zvnxzuwv.json",    // Discord
+  simplicity: "https://cdn.lordicon.com/tsrgicte.json",
+  shield: "https://cdn.lordicon.com/sjoccsdj.json",
+  community: "https://cdn.lordicon.com/ubpgwkmy.json",
+  github: "https://cdn.lordicon.com/jjxzcivr.json",
+  discord: "https://cdn.lordicon.com/zvnxzuwv.json",
 };
 
 // Wrapper pour Lordicon

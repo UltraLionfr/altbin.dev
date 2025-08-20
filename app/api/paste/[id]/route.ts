@@ -10,7 +10,7 @@ export async function GET(
   request: NextRequest,
   context: { params: Promise<{ id: string }> }
 ) {
-  const { id: pasteId } = await context.params; // ✅ await obligatoire
+  const { id: pasteId } = await context.params;
 
   if (!pasteId) {
     return NextResponse.json({ error: 'Invalid ID' }, { status: 400 });

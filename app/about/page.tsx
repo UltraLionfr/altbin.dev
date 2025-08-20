@@ -166,7 +166,7 @@ export default function AboutPage() {
 
         <div className="flex justify-center gap-4 flex-wrap">
           <ContactButton
-            href="https://discord.gg/ton-serveur"
+            href="https://discord.gg/msaPJjBMbZ"
             icon={icons.discord}
             text="Join Discord"
             gradient="bg-gradient-to-r from-indigo-600 to-indigo-500"

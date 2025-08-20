@@ -1,5 +1,6 @@
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { Prisma } from '@prisma/client';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 
@@ -17,17 +18,18 @@ export async function GET(req: Request) {
 
   const search = searchParams.get('q') || '';
 
-const filter = {
-  createdBy: session.user.id,
-  ...(search
-    ? {
-        title: {
-          contains: search,
-          mode: 'insensitive',
-        },
-      }
-    : {}),
-} as const;
+  // ✅ Typage explicite avec Prisma
+  const filter: Prisma.PasteWhereInput = {
+    createdBy: session.user.id,
+    ...(search
+      ? {
+          title: {
+            contains: search,
+            mode: 'insensitive', // correspond au type Prisma.QueryMode
+          },
+        }
+      : {}),
+  };
 
   const [pastes, total] = await Promise.all([
     prisma.paste.findMany({

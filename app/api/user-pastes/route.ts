@@ -17,7 +17,7 @@ export async function GET(req: Request) {
 
   const search = searchParams.get('q') || '';
 
-  const filter = {
+  const filter: Prisma.PasteWhereInput = {
     createdBy: session.user.id,
     ...(search
       ? {

@@ -1,8 +1,8 @@
 {
-  "packageManager": "pnpm@10.8.1",
   "name": "altbin.dev",
   "version": "1.0.0",
   "private": true,
+  "packageManager": "pnpm@10.8.1",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

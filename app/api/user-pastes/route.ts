@@ -17,17 +17,17 @@ export async function GET(req: Request) {
 
   const search = searchParams.get('q') || '';
 
-  const filter: Prisma.PasteWhereInput = {
-    createdBy: session.user.id,
-    ...(search
-      ? {
-          title: {
-            contains: search,
-            mode: 'insensitive',
-          },
-        }
-      : {}),
-  };
+const filter = {
+  createdBy: session.user.id,
+  ...(search
+    ? {
+        title: {
+          contains: search,
+          mode: 'insensitive',
+        },
+      }
+    : {}),
+} as const;
 
   const [pastes, total] = await Promise.all([
     prisma.paste.findMany({

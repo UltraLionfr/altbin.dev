@@ -10,8 +10,8 @@ import 'prismjs/themes/prism-tomorrow.css';
 import AuthSection from '@/components/paste-form/AuthSection';
 import CodeViewer from '@/components/paste/CodeViewer';
 import LoadingPaste from '@/components/paste/LoadingPaste';
-import PasswordForm from '@/components/paste/PasswordForm';
-import PasteSidebar from '@/components/paste/PasteSidebar';
+import PasswordForm from '@/components/paste/Password';
+import PasteSidebar from '@/components/paste/Sidebar';
 import { Paste } from '@/types/paste';
 
 async function loadLanguage(lang: string) {

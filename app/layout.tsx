@@ -1,5 +1,5 @@
-import AuthProvider from '@/components/SessionProvider';
-import ToasterProvider from '@/components/ui/ToasterProvider';
+import AuthProvider from '@/components/providers/SessionProvider';
+import ToasterProvider from '@/components/providers/ToasterProvider';
 import { ReactNode } from 'react';
 import './globals.css';
 

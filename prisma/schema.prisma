@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./altbin.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Paste {
@@ -17,9 +17,8 @@ model Paste {
   size      Int?
   createdAt DateTime @default(now())
   createdBy String?
-
-  dummyId String?
-  dummy   Dummy?    @relation(fields: [dummyId], references: [id])
+  dummyId   String?
+  dummy     Dummy?   @relation(fields: [dummyId], references: [id])
 }
 
 model Dummy {

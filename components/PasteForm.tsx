@@ -2,7 +2,7 @@
 
 import AuthSection from "@/components/paste-form/AuthSection";
 import Editor from "@/components/paste-form/Editor";
-import SidebarPanel from "@/components/paste-form/SidebarPanel";
+import SidebarPanel from "@/components/paste-form/Sidebar";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";

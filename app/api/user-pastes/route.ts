@@ -1,5 +1,6 @@
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import type { Prisma } from '@prisma/client';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 
@@ -17,13 +18,13 @@ export async function GET(req: Request) {
 
   const search = searchParams.get('q') || '';
 
-  const filter = {
+  const filter: Prisma.PasteWhereInput = {
     createdBy: session.user.id,
     ...(search
       ? {
           title: {
             contains: search,
-            mode: 'insensitive',
+            mode: 'insensitive' as Prisma.QueryMode,
           },
         }
       : {}),

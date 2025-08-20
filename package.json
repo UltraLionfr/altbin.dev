@@ -10,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/prisma-adapter": "^2.10.0",
     "@lordicon/react": "^1.11.0",
     "@monaco-editor/react": "^4.7.0",
     "@prisma/client": "^6.14.0",

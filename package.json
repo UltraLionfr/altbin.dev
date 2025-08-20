@@ -1,6 +1,7 @@
 {
+  "packageManager": "pnpm@10.8.1",
   "name": "altbin.dev",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -36,7 +37,6 @@
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
-    "pnpm": "10.8.1",
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "@types/prismjs": "^1.26.5",
